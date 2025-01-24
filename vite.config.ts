@@ -9,7 +9,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: '/Ground-Control-Station/FYP-page/',
+  base: '/FYP-Ground-Control-Station/',
     build: {
     outDir: 'build', 
   },
