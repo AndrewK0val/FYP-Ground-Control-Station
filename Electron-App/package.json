@@ -1,0 +1,25 @@
+{
+  "name": "electron-app",
+  "version": "1.0.0",
+  "ProductName": "Applied Robotics Ground Control Station",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndrewK0val/FYP-Ground-Control-Station.git"
+  },
+  "author": "AndrewK0val",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AndrewK0val/FYP-Ground-Control-Station/issues"
+  },
+  "homepage": "https://github.com/AndrewK0val/FYP-Ground-Control-Station#readme",
+  "description": "",
+  "dependencies": {
+    "electron": "^34.0.0",
+    "toastify-js": "^1.12.0"
+  }
+}
