@@ -1,8 +1,13 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  /* padding: 2rem; */
+  /* text-align: center; */
+}
+
+@font-face {
+  font-family: 'Basteleur'; /*a name to be used later*/
+  src: url(assets/webfonts/LeMurmure-Regular.woff); /*URL to font*/
 }
 
 .logo {
@@ -16,6 +21,13 @@
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+.Title {
+  font-size: 7em;
+  margin: 1em 0;
+  font-family: 'Basteleur', serif;
+  text-align: center;
 }
 
 @keyframes logo-spin {

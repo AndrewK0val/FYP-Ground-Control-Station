@@ -3,14 +3,11 @@
 @tailwind utilities;
 
 
+/* General styles applied to both themes */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -18,13 +15,46 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Styles specifically for dark mode */
+@media (prefers-color-scheme: dark) {
+
+  .logo {
+    -webkit-filter:invert(1);
+        filter:invert(1);
+  }
+
+  .nav {
+    background-color: #000000;
+  }
+
+
+  :root {
+    color: rgba(255, 255, 255, 0.87);
+
+    background: rgb(0,0,0);
+    background: linear-gradient(183deg, rgba(0,0,0,1) 0%, rgba(40,40,40,1) 100%);
+  }
+}
+/* Styles specifically for light mode */
+@media (prefers-color-scheme: light) {
+
+  .nav {
+    background-color: #ffffff;
+  }
+
+  :root {
+    color: rgba(0, 0, 0, 0.87); /* Adjust text color for light theme */
+    background-color: #e6e6e6 !important; /* Light theme background */
+  }
+}
+
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #958eaa;
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #8e93ff;
 }
 
 body {
@@ -33,6 +63,50 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+}
+
+.mainContainer {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+
+}
+
+.mainDiv{
+  display: flex;
+  align-items: center;
+}
+
+.subtitle {
+  text-align: center;
+  margin-top: -6rem;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.subtitle-2 {
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.nav {
+  left: 0;
+  position: fixed;
+  display: inline-flex;
+  padding-left: 10rem;
+  padding: .07rem;
+  width: 100vw;
+  height: 5rem;
+}
+
+.logo {
+  margin-top: 0;
+  width: 12rem;
+  transform: translateY(-1rem);
+  margin-left: 0;
+}
+
+.hero-image {
+width: 30rem;
 }
 
 h1 {
