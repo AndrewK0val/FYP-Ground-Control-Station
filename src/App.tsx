@@ -7,19 +7,6 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 
 
-import appliedRoboticsLogo from '@/assets/appliedRobotics-logo.svg'
-import gcsImage from '@/assets/GCS.png'
-// import {
-//   NavigationMenu,
-//   NavigationMenuContent,
-//   NavigationMenuIndicator,
-//   NavigationMenuItem,
-//   NavigationMenuLink,
-//   NavigationMenuList,
-//   NavigationMenuTrigger,
-//   NavigationMenuViewport,
-// } from "@/components/ui/navigation-menu"
-
 import {
   Carousel,
   CarouselContent,
@@ -38,22 +25,7 @@ import {
 } from "@/components/navmenuDemo"
 
 
-// import {
-//   Menubar,
-//   MenubarCheckboxItem,
-//   MenubarContent,
-//   MenubarItem,
-//   MenubarMenu,
-//   MenubarRadioGroup,
-//   MenubarRadioItem,
-//   MenubarSeparator,
-//   MenubarShortcut,
-//   MenubarSub,
-//   MenubarSubContent,
-//   MenubarSubTrigger,
-//   MenubarTrigger,
-  
-// } from "@/components/ui/menubar"
+
 
 function App() {
 
