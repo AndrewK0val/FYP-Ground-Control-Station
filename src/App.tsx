@@ -1,7 +1,6 @@
 // import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
-import { Button } from "@/components/ui/button"
 import './App.css'
 import { Separator } from "@/components/ui/separator"
 import { Card, CardContent } from "@/components/ui/card"
@@ -28,6 +27,9 @@ import {
 } from "@/components/ui/carousel"
 
 import { ThemeProvider } from "@/components/theme-provider";
+import gcsImage from '@/assets/GCS.png'
+import appliedRoboticsLogo from '@/assets/appliedRobotics-logo.svg'
+import setulogo from '@/assets/setu-logo.svg'
 
 import {
   NavigationMenuDemo
@@ -74,8 +76,8 @@ function App() {
       </NavigationMenu> */}
 
       <div className='nav'>
-        <img className='setu-logo' src="src/assets/setu-logo.svg" alt="" />
-        <img className='main-logo' src="src/assets/appliedRobotics-logo.svg" alt="" />
+        <img className='setu-logo' src={setulogo} alt="SETU Logo" />
+        <img className='main-logo' src={appliedRoboticsLogo} alt="Applied Robotics Logo" />
          <NavigationMenuDemo />
       </div>
 
@@ -96,7 +98,7 @@ function App() {
 
           <div className="mainContainer">
 
-            <img src="src/assets/GCS.png" className='hero-image' alt="" />
+          <img src={gcsImage} className='hero-image' alt="GCS Image" />
 
           </div>
 
