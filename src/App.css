@@ -5,10 +5,7 @@
   /* text-align: center; */
 }
 
-@font-face {
-  font-family: 'Basteleur'; /*a name to be used later*/
-  src: url(assets/webfonts/LeMurmure-Regular.woff); /*URL to font*/
-}
+
 
 .logo {
   height: 6em;
@@ -23,12 +20,6 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-.Title {
-  font-size: 7em;
-  margin: 1em 0;
-  font-family: 'Basteleur', serif;
-  text-align: center;
-}
 
 @keyframes logo-spin {
   from {

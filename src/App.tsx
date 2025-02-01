@@ -78,12 +78,17 @@ function App() {
         <img className='main-logo' src="src/assets/appliedRobotics-logo.svg" alt="" />
          <NavigationMenuDemo />
       </div>
-      <div className='mainDiv'>
+
+    {/* divs are purely for visual purposes */}
+      <div className='noiseOverlay'></div>
+      <div className="gradient"></div>
 
 
-      </div>
-          <h1 className="Title">Portable Ground Control Station
-            <Separator />
+
+        
+          <h1 className="Title">
+            Portable Ground Control Station
+            <Separator  className="separator"/>
           </h1>
           <h3 className='subtitle'>
             An Exploration Into Specialized Use-Case Computing Platforms
@@ -123,6 +128,8 @@ function App() {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
+
+
   
 
       </div>
