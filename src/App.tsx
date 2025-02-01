@@ -1,9 +1,12 @@
 // import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
-import { Button } from "@/components/ui/button"
 import './App.css'
 import { Separator } from "@/components/ui/separator"
+import { Card, CardContent } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
+
+
 import appliedRoboticsLogo from '@/assets/appliedRobotics-logo.svg'
 import gcsImage from '@/assets/GCS.png'
 // import {
@@ -17,7 +20,18 @@ import gcsImage from '@/assets/GCS.png'
 //   NavigationMenuViewport,
 // } from "@/components/ui/navigation-menu"
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+
 import { ThemeProvider } from "@/components/theme-provider";
+import gcsImage from '@/assets/GCS.png'
+import appliedRoboticsLogo from '@/assets/appliedRobotics-logo.svg'
+import setulogo from '@/assets/setu-logo.svg'
 
 import {
   NavigationMenuDemo
@@ -47,8 +61,11 @@ function App() {
   return (
     <>
      <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+        {/* <img src="src/assets/noise.jpg" className="noise-bg" alt="" /> */}
 
-      <div>
+      <div className="noise-bg">
+
+
       {/* <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
@@ -61,16 +78,21 @@ function App() {
       </NavigationMenu> */}
 
       <div className='nav'>
-        <img className='logo' src={appliedRoboticsLogo} alt="Applied Robotics Logo" />
-      <NavigationMenuDemo />
+        <img className='setu-logo' src={setulogo} alt="SETU Logo" />
+        <img className='main-logo' src={appliedRoboticsLogo} alt="Applied Robotics Logo" />
+         <NavigationMenuDemo />
       </div>
-      <div className='mainDiv'>
+
+    {/* divs are purely for visual purposes */}
+      <div className='noiseOverlay'></div>
+      <div className="gradient"></div>
 
 
 
-      </div>
-          <h1 className="Title">Portable Ground Control Station
-            <Separator />
+        
+          <h1 className="Title">
+            Portable Ground Control Station
+            <Separator  className="separator"/>
           </h1>
           <h3 className='subtitle'>
             An Exploration Into Specialized Use-Case Computing Platforms
@@ -78,18 +100,54 @@ function App() {
 
           <div className="mainContainer">
 
-            <img src={gcsImage} className='hero-image' alt="GCS Image" />
+          <img src={gcsImage} className='hero-image' alt="GCS Image" />
+
           </div>
 
           <h3 className='subtitle-2'>Final Year Computer Science Project By Andrew Koval</h3>
+          <br />
+          <br />
+          <br />
+          <br />
 
-      </div>
+        <Carousel
+        opts={{
+          align: "start",
+        }}
+        className="w-full max-w-sm"
+      >
+        <CarouselContent>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+              <div className="p-1">
+                <Card>
+                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                    <span className="text-3xl font-semibold">{index + 1}</span>
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+
+
   
 
-      <div>
-       <Button>Click me</Button>
       </div>
+
+
     </ThemeProvider>
+
+      <div className="flex flex-col space-y-3">
+        <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-[250px]" />
+          <Skeleton className="h-4 w-[200px]" />
+        </div>
+      </div>
 
     </>
   )
