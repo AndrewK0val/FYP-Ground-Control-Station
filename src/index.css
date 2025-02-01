@@ -60,7 +60,7 @@
 
 
 .noiseOverlay {
-  background: url(src/assets/noise.jpg);
+  background: url(assets/noise.jpg);
   width: 100vw;
   height: 100vh;
   z-index: 101;
