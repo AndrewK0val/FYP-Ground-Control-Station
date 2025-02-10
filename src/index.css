@@ -134,6 +134,11 @@ a:hover {
   color: #8e93ff;
 }
 
+.guage-display {
+  position: relative;
+  z-index: 1000;
+}
+
 body {
   margin: 0;
   display: flex;

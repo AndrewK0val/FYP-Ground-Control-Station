@@ -5,6 +5,8 @@ import './App.css'
 import { Separator } from "@/components/ui/separator"
 import { Card, CardContent } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
+import MqttDisplay from "@/components/MQTTDemo"
+// import Gauge from "@/components/gauge"
 
 
 import {
@@ -81,6 +83,7 @@ function App() {
           <br />
           <br />
           <br />
+          
 
         <Carousel
         opts={{
@@ -104,6 +107,10 @@ function App() {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
+
+      <MqttDisplay />
+      
+      {/* <Gauge/> */}
 
 
   
