@@ -6,7 +6,7 @@ import Gauge from './gauge';
 //     // Add any props here if needed
 // }
 
-const MqttURL = 'ws://192.168.0.105:8080';
+const MqttURL = 'ws://192.168.0.222:8080';
 // const MqttURL = 'wss://mqtt-dashboard.com:8884/mqtt';
 
 
