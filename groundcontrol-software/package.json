@@ -3,14 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-
-"main": "main.js",
-"scripts": {
-  "dev": "vite",
-  "start": "electron .",
-  "build": "vite build"
-},
+  "main": "main.js",
+  "scripts": {
+    "dev": "vite",
+    "start": "electron .",
+    "build": "vite build"
+  },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
