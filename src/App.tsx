@@ -4,16 +4,8 @@
 import './App.css'
 import { Separator } from "@/components/ui/separator"
 import { Card, CardContent } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
 
-
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
+// import Gauge from "@/components/gauge"
 
 import { ThemeProvider } from "@/components/theme-provider";
 import gcsImage from '@/assets/GCS.png'
@@ -24,11 +16,7 @@ import {
   NavigationMenuDemo
 } from "@/components/navmenuDemo"
 
-
-
-
 function App() {
-
 
   return (
     <>
@@ -38,20 +26,9 @@ function App() {
       <div className="noise-bg">
 
 
-      {/* <NavigationMenu>
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <NavigationMenuLink>Link</NavigationMenuLink>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu> */}
-
       <div className='nav'>
         <img className='setu-logo' src={setulogo} alt="SETU Logo" />
-        <img className='main-logo' src={appliedRoboticsLogo} alt="Applied Robotics Logo" />
+        <img className='main-logo' src={appliedRoboticsLogo} alt="Applied Robotics Logo"  />
          <NavigationMenuDemo />
       </div>
 
@@ -80,46 +57,29 @@ function App() {
           <br />
           <br />
           <br />
-          <br />
 
-        <Carousel
-        opts={{
-          align: "start",
-        }}
-        className="w-full max-w-sm"
-      >
-        <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-              <div className="p-1">
-                <Card>
-                  <CardContent className="flex aspect-square items-center justify-center p-6">
-                    <span className="text-3xl font-semibold">{index + 1}</span>
-                  </CardContent>
-                </Card>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
+          <Card className=" mx-auto max-w-3xl" id='Card'>   
+            <CardContent className="flex items-center justify-center max-w-3xl p-6 text-center ">
+                <p>
+                  This project aims to provide a device targeted towards drone, robot and remote-operated vehicle (ROV) operators with the aim of simplifying initial configuration of devices before deployment of the drone / robot / ROV.
+                   Construction and development of this device is an exploration of a specialized use-case computing platform rarely seen in the consumer electronics sector.
+                   <br />
+                   <br />
+                    An overarching theme within this development effort is the return to aspects of older, vintage technology.
+                   <br />
+                   <br />
+                    In a world of endless information, artificial intelligence, touchscreens and software updates, I believe that there is profound value in taking a step back and studying technology from the past. In this pursuit I have discovered that physical control surfaces such as real switches, sliders and rotary dials are much more appealing to interact with compared to pressing a virtual button on a GUI and that analog-format video still has a place in today’s world. This project aims to strike a balance between the old and the new world in respect to user interaction and potentially convince individuals that more touchscreens are not always the answer.
+                </p>
+            </CardContent>
+          </Card>
+          
 
-
-  
 
       </div>
 
 
     </ThemeProvider>
 
-      <div className="flex flex-col space-y-3">
-        <Skeleton className="h-[125px] w-[250px] rounded-xl" />
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-[250px]" />
-          <Skeleton className="h-4 w-[200px]" />
-        </div>
-      </div>
 
     </>
   )

@@ -23,6 +23,12 @@
         filter:invert(1);
   }
 
+  #Card {
+    background-color: #000000;
+    border: 1px solid #757575;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
   .nav button {
     background-color: #ffffff00 !important;
   }
@@ -132,6 +138,11 @@ a {
 }
 a:hover {
   color: #8e93ff;
+}
+
+.guage-display {
+  position: relative;
+  z-index: 1000;
 }
 
 body {
