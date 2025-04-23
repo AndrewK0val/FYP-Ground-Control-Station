@@ -1,0 +1,115 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.bg {
+  width: 100vw;
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  left: 0;
+}
+
+
+.HUD1 {
+  /* width: 100vw; */
+  /* margin-left: -750px; */
+  /* margin-top: -15%; */
+  position: absolute;
+
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: auto;
+
+  pointer-events: none;
+  z-index: 100;
+  /* filter: drop-shadow(0px 14px 75.2px rgba(0, 0, 0, 0.25)); */
+  backdrop-filter: blur(5px);
+  
+  /* -webkit-mask-image: url(assets/FYP-HUD-1.svg);
+  mask-image: url(assets/FYP-HUD-1.svg);
+  -webkit-mask-size: contain; */
+
+
+  stroke-width: 3px;
+
+  background-blend-mode: soft-light, normal;
+
+
+  /* mask-repeat: no-repeat; */
+
+  /* Optional drop shadow to mimic figma effects */
+  /* filter: drop-shadow(0 14px 75px rgba(0, 0, 0, 0.25)); */
+}
+
+/* .HUD1 path {
+  filter: url(#inset-shadow);
+} */
+
+
+/* .HUDMask {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: auto; 
+  z-index: 101;
+} */
+
+
+
+
+.HUD2 {
+  width: 57vw;
+  z-index: 100;
+  top: 0;
+  height: auto;
+  position: absolute;
+  left: 21.5%;
+}
+
+.headerText {
+  position: absolute;
+  font-size: 18pt;
+  margin-top: 4px;
+  left: 33%;
+  top: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+  color: white;
+  font-weight: 300;
+  text-shadow: 0px 4px 24.7px #000;
+
+}
+
+
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
