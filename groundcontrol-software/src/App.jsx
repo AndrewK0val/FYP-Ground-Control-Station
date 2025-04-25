@@ -4,6 +4,7 @@ import HUDMask from './assets/HUD-mask.svg'
 import bgImage from './assets/image.png';
 import './App.css'
 import MiniMap from './components/MiniMap';
+import SerialMonitor from './components/websocketsClient';
 
 
 function App() {
@@ -11,7 +12,8 @@ function App() {
 
   return (
     <>
-    {/* <img src={HUD1} alt="" className='HUD1'/> */}
+
+     {/* <img src={HUD1} alt="" className='HUD1'/> */}
         <svg
           className="HUD1"
           xmlns="http://www.w3.org/2000/svg"
@@ -96,6 +98,8 @@ function App() {
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
+        <SerialMonitor />
+
       </div>
     </>
   )

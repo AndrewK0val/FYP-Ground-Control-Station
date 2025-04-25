@@ -1,90 +1,153 @@
-
 #include <Adafruit_NeoPixel.h>
+#include <ArduinoJson.h>
 
-#define PIN_NEO_PIXEL 2  // The ESP32 pin GPIO16 connected to NeoPixel
+#define PIN_NEO_PIXEL 2
 #define NUM_PIXELS 5
-
-const int BUTTON_PINS[] = {10, 20, 9, 21}; // GPIO pins for buttons (A, B, C, D)
-const int PIXEL_MAP[] = {0, 1, 2, 3};    // Corresponding NeoPixel indices for buttons
-const int NUM_BUTTONS = sizeof(BUTTON_PINS) / sizeof(BUTTON_PINS[0]);
-
-int lastStates[NUM_BUTTONS];  // Array to store the last states of buttons
-int currentStates[NUM_BUTTONS]; // Array to store the current states of buttons
+const int SWITCH_PINS[] = {10, 20, 9, 21};  // GPIO mappings for switches A–D
+const int PIXEL_MAP[] = {0, 1, 2, 3};       // LED indices
+const int NUM_SWITCHES = sizeof(SWITCH_PINS) / sizeof(SWITCH_PINS[0]);
 
 Adafruit_NeoPixel NeoPixel(NUM_PIXELS, PIN_NEO_PIXEL, NEO_GRBW);
+enum EventState { OFF, INIT, LOADING, SUCCESS, ERROR };
+EventState eventStates[NUM_SWITCHES] = {OFF};
 
-// Variables for the breathing effect
-int brightness[NUM_BUTTONS] = {0, 0, 0, 0}; // Brightness for each LED
-int fadeDirection[NUM_BUTTONS] = {1, 1, 1, 1}; // Direction for fading (+1 or -1)
-unsigned long lastUpdateTime[NUM_BUTTONS] = {0, 0, 0, 0}; // Last update time for each LED
+// switch state tracking
+int lastStates[NUM_SWITCHES];
+int currentStates[NUM_SWITCHES];
+unsigned long lastDebounceTime[NUM_SWITCHES] = {0};
+const unsigned long debounceDelay = 50; // ms
 
-const int FADE_STEP = 5; // Increment for brightness
+// For breathing effect
+int brightness[NUM_SWITCHES] = {0};
+int fadeDirection[NUM_SWITCHES] = {1};
+unsigned long lastUpdateTime[NUM_SWITCHES] = {0};
 const int MAX_BRIGHTNESS = 255;
 const int MIN_BRIGHTNESS = 0;
 
-// Function for breathing effect
-void breatheEffect(int buttonIndex, int r, int g, int b, int w, int effectSpeed, unsigned long currentTime) {
-  // Check if it's time to update the brightness for this LED
-  if (currentTime - lastUpdateTime[buttonIndex] >= effectSpeed) {
-    // Update the last update time
-    lastUpdateTime[buttonIndex] = currentTime;
-
-    // Adjust brightness for the breathing effect
-    brightness[buttonIndex] += fadeDirection[buttonIndex] * FADE_STEP;
-
-    // Reverse direction if limits are reached
-    if (brightness[buttonIndex] >= MAX_BRIGHTNESS || brightness[buttonIndex] <= MIN_BRIGHTNESS) {
-      fadeDirection[buttonIndex] *= -1;
-    }
-
-    // Set the corresponding pixel color with current brightness
-    NeoPixel.setPixelColor(PIXEL_MAP[buttonIndex], NeoPixel.Color(
-      (r * brightness[buttonIndex]) / MAX_BRIGHTNESS,
-      (g * brightness[buttonIndex]) / MAX_BRIGHTNESS,
-      (b * brightness[buttonIndex]) / MAX_BRIGHTNESS,
-      (w * brightness[buttonIndex]) / MAX_BRIGHTNESS
-    ));
-
-    Serial.printf("Button %c: Pixel %d breathing at brightness %d\n", 'A' + buttonIndex, PIXEL_MAP[buttonIndex], brightness[buttonIndex]);
-  }
-}
-
 void setup() {
+  Serial.begin(115200);
   NeoPixel.begin();
-  Serial.begin(9600);
-
-  // Initialize the pushbutton pins as pull-up inputs
-  for (int i = 0; i < NUM_BUTTONS; i++) {
-    pinMode(BUTTON_PINS[i], INPUT_PULLUP);
-    lastStates[i] = HIGH; // Initial state is HIGH due to pull-up
-  }
-
-  // Clear all NeoPixels initially
   NeoPixel.clear();
   NeoPixel.show();
+
+  for (int i = 0; i < NUM_SWITCHES; i++) {
+    pinMode(SWITCH_PINS[i], INPUT_PULLUP);
+    lastStates[i] = digitalRead(SWITCH_PINS[i]);
+  }
 }
 
 void loop() {
   unsigned long currentTime = millis();
+  handleSwitches(currentTime);
+  readSerialMessages();
+  updateLEDs(currentTime);
+  NeoPixel.show();
+  
+}
 
-  // Read button states and handle breathing effect
-  for (int i = 0; i < NUM_BUTTONS; i++) {
-    currentStates[i] = digitalRead(BUTTON_PINS[i]);
+void handleSwitches(unsigned long currentTime) {
+  for (int i = 0; i < NUM_SWITCHES; i++) {
+    int reading = digitalRead(SWITCH_PINS[i]);
 
-    if (currentStates[i] == LOW) { // Button pressed
-      // Call the breathing effect function with specific color and speed
-      breatheEffect(i, 0, 255, 0, 0, 20, currentTime); // Green color, speed 20ms
-    } else { // Button not pressed
-      NeoPixel.setPixelColor(PIXEL_MAP[i], 0); // Turn off the corresponding pixel
-      brightness[i] = 0; // Reset brightness when button is released
-      fadeDirection[i] = 1; // Reset fade direction
-      Serial.printf("Button %c is released, turning off Pixel %d\n", 'A' + i, PIXEL_MAP[i]);
+    if (reading != lastStates[i]) {
+      lastDebounceTime[i] = currentTime;
     }
 
-    // Update the last state
-    lastStates[i] = currentStates[i];
-  }
+    if ((currentTime - lastDebounceTime[i]) > debounceDelay) {
+      if (reading != currentStates[i]) {
+        currentStates[i] = reading;
 
-  // Show the updated NeoPixel state after processing all buttons
-  NeoPixel.show();
+        // LOW means switch ON, HIGH means switch OFF
+        StaticJsonDocument<64> doc;
+        doc[String("SW-") + char('A' + i)] = (currentStates[i] == LOW);
+        serializeJson(doc, Serial);
+        Serial.println();
+      }
+    }
+    lastStates[i] = reading;
+  }
 }
+
+void readSerialMessages() {
+  while (Serial.available()) {
+    String input = Serial.readStringUntil('\n');
+    StaticJsonDocument<128> doc;
+    DeserializationError error = deserializeJson(doc, input);
+    if (error) {
+      Serial.println("JSON parse error");
+      continue;
+    }
+
+    for (int i = 0; i < NUM_SWITCHES; i++) {
+      String switchKey = String("SW-") + char('A' + i);
+      String eventKey = switchKey + "-EVENT";
+
+      // Handle switch OFF state {"SW-A": false}
+      if (doc.containsKey(switchKey)) {
+        bool isOn = doc[switchKey];
+        if (!isOn) {
+          eventStates[i] = OFF;
+          Serial.printf("Switch %c turned OFF, LED reset to white\n", 'A' + i);
+        }
+      }
+
+      // Handle {"SW-A-EVENT": "LOADING"} etc.
+      if (doc.containsKey(eventKey)) {
+        String evt = doc[eventKey];
+        if (evt == "INIT") eventStates[i] = INIT;
+        else if (evt == "LOADING") eventStates[i] = LOADING;
+        else if (evt == "SUCCESS") eventStates[i] = SUCCESS;
+        else if (evt == "ERROR") eventStates[i] = ERROR;
+
+        Serial.printf("Received event for SW-%c: %s\n", 'A' + i, evt.c_str());
+      }
+    }
+  }
+}
+
+void updateLEDs(unsigned long currentTime) {
+  for (int i = 0; i < NUM_SWITCHES; i++) {
+    if (currentStates[i] == HIGH) {
+      // if the switch is OFF, override everything to white
+      NeoPixel.setPixelColor(PIXEL_MAP[i], NeoPixel.Color(255, 255, 255, 0));
+      continue;  // Skip event-based update
+    }
+
+    // if the switch is ON — follow the event state
+    switch (eventStates[i]) {
+      case INIT:
+        NeoPixel.setPixelColor(PIXEL_MAP[i], NeoPixel.Color(255, 255, 0, 0)); // Yellow
+        break;
+      case LOADING:
+        flashingEffect(i, 255, 100, 0, 0); // Flashing amber
+        break;
+      case SUCCESS:
+        NeoPixel.setPixelColor(PIXEL_MAP[i], NeoPixel.Color(0, 255, 0, 0)); // Green
+        break;
+      case ERROR:
+        NeoPixel.setPixelColor(PIXEL_MAP[i], NeoPixel.Color(255, 0, 0, 0)); // Red
+        break;
+      case OFF:
+      default:
+        NeoPixel.setPixelColor(PIXEL_MAP[i], NeoPixel.Color(255, 255, 255, 0)); // Default white
+        break;
+    }
+  }
+}
+
+    void flashingEffect(int i, int r, int g, int b, int w) {
+      unsigned long now = millis();
+      const unsigned long FLASH_INTERVAL = 300; // 300 ms on/off
+
+    if (now - lastUpdateTime[i] >= FLASH_INTERVAL) {
+      lastUpdateTime[i] = now;
+      brightness[i] = brightness[i] == 0 ? MAX_BRIGHTNESS : 0; // Toggle brightness
+    }
+
+    NeoPixel.setPixelColor(PIXEL_MAP[i], NeoPixel.Color(
+      (r * brightness[i]) / MAX_BRIGHTNESS,
+      (g * brightness[i]) / MAX_BRIGHTNESS,
+      (b * brightness[i]) / MAX_BRIGHTNESS,
+      (w * brightness[i]) / MAX_BRIGHTNESS
+    ));
+  }

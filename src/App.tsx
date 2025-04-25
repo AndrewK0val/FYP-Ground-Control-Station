@@ -1,87 +1,69 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
 import './App.css'
 import { Separator } from "@/components/ui/separator"
 import { Card, CardContent } from "@/components/ui/card"
-
-// import Gauge from "@/components/gauge"
-
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/theme-provider"
 import gcsImage from '@/assets/GCS.png'
 import appliedRoboticsLogo from '@/assets/appliedRobotics-logo.svg'
 import setulogo from '@/assets/setu-logo.svg'
-
-import {
-  NavigationMenuDemo
-} from "@/components/navmenuDemo"
+import { NavigationMenuDemo } from "@/components/navmenuDemo"
+import ProjectDescription from "@/components/ProjectDescription"
+import { Link } from "react-router-dom"; // assumes react-router-dom is set up
 
 function App() {
-
   return (
-    <>
-     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-        {/* <img src="src/assets/noise.jpg" className="noise-bg" alt="" /> */}
-
+    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <div className="noise-bg">
+        <div className='nav'>
+          <img className='setu-logo' src={setulogo} alt="SETU Logo" />
+          <img className='main-logo' src={appliedRoboticsLogo} alt="Applied Robotics Logo" />
+          <NavigationMenuDemo />
+        </div>
 
+        <div className='noiseOverlay'></div>
+        <div className="gradient"></div>
 
-      <div className='nav'>
-        <img className='setu-logo' src={setulogo} alt="SETU Logo" />
-        <img className='main-logo' src={appliedRoboticsLogo} alt="Applied Robotics Logo"  />
-         <NavigationMenuDemo />
-      </div>
+        <h1 className="Title">
+          Portable Ground Control Station
+          <Separator className="separator" />
+        </h1>
+        <h3 className='subtitle'>
+          An Exploration Into Specialized Use-Case Computing Platforms
+        </h3>
 
-    {/* divs are purely for visual purposes */}
-      <div className='noiseOverlay'></div>
-      <div className="gradient"></div>
-
-
-
-        
-          <h1 className="Title">
-            Portable Ground Control Station
-            <Separator  className="separator"/>
-          </h1>
-          <h3 className='subtitle'>
-            An Exploration Into Specialized Use-Case Computing Platforms
-          </h3>
-
-          <div className="mainContainer">
-
+        <div className="mainContainer">
           <img src={gcsImage} className='hero-image' alt="GCS Image" />
+        </div>
 
-          </div>
+        <h3 className='subtitle-2'>Final Year Computer Science Project By Andrew Koval</h3>
 
-          <h3 className='subtitle-2'>Final Year Computer Science Project By Andrew Koval</h3>
-          <br />
-          <br />
-          <br />
-
-          <Card className=" mx-auto max-w-3xl" id='Card'>   
-            <CardContent className="flex items-center justify-center max-w-3xl p-6 text-center ">
-                <p>
-                  This project aims to provide a device targeted towards drone, robot and remote-operated vehicle (ROV) operators with the aim of simplifying initial configuration of devices before deployment of the drone / robot / ROV.
-                   Construction and development of this device is an exploration of a specialized use-case computing platform rarely seen in the consumer electronics sector.
-                   <br />
-                   <br />
-                    An overarching theme within this development effort is the return to aspects of older, vintage technology.
-                   <br />
-                   <br />
-                    In a world of endless information, artificial intelligence, touchscreens and software updates, I believe that there is profound value in taking a step back and studying technology from the past. In this pursuit I have discovered that physical control surfaces such as real switches, sliders and rotary dials are much more appealing to interact with compared to pressing a virtual button on a GUI and that analog-format video still has a place in today’s world. This project aims to strike a balance between the old and the new world in respect to user interaction and potentially convince individuals that more touchscreens are not always the answer.
-                </p>
-            </CardContent>
-          </Card>
-          
-
-
+        <Card className="mx-auto max-w-3xl" id='Card'>
+          <CardContent className="flex items-center justify-center max-w-3xl p-6 text-center">
+            <ProjectDescription />
+          </CardContent>
+        </Card>
       </div>
-
-
+      <footer className="w-full bg-gray-900 text-white py-8 px-4 mt-16 footer">
+        <div className="max-w-screen-lg mx-auto flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
+          <p className="text-sm">&copy; 2025 Andrew Koval</p>
+          <div className="flex gap-4">
+            <a
+              href="https://www.linkedin.com/in/your-linkedin-profile"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline hover:text-gray-300 transition-colors"
+            >
+              LinkedIn
+            </a>
+            <Link
+              to="/about"
+              className="hover:underline hover:text-gray-300 transition-colors"
+            >
+              About Me
+            </Link>
+          </div>
+        </div>
+      </footer>
     </ThemeProvider>
-
-
-    </>
   )
 }
 

@@ -77,16 +77,16 @@
 
 .headerText {
   position: absolute;
-  font-size: 18pt;
+  font-size: 15pt;
   margin-top: 4px;
   left: 33%;
   top: 0;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  /* font-family: url */
 
   color: white;
   font-weight: 300;
   text-shadow: 0px 4px 24.7px #000;
-
+  z-index: 1000;
 }
 
 

@@ -257,6 +257,29 @@ button:focus-visible {
   }
 }
 
+.footer {
+  width: 100vw;
+  background-color: #111827; 
+  color: white;
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 102; 
+  position: relative; 
+  margin-top: 3rem;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.footer a {
+  color: #e0e0e0;
+  margin-left: 1.5rem;
+}
+
+.footer a:hover {
+  color: #a3bffa;
+}
+
 
 
 @layer base {
